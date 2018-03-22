@@ -14,6 +14,7 @@
 		B1474A82205BCB5F003D60DC /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1474A81205BCB5F003D60DC /* TopViewController.swift */; };
 		B1474A86205BFE03003D60DC /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1474A85205BFE03003D60DC /* PostViewController.swift */; };
 		B1474A88205C082F003D60DC /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1474A87205C082F003D60DC /* TabBarViewController.swift */; };
+		B1474A8D206336A6003D60DC /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1474A8C206336A6003D60DC /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		B1474A81205BCB5F003D60DC /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		B1474A85205BFE03003D60DC /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		B1474A87205C082F003D60DC /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		B1474A8C206336A6003D60DC /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		B1474A6C205BBA4D003D60DC /* Post_it */ = {
 			isa = PBXGroup;
 			children = (
+				B1474A8B20633674003D60DC /* Extensions */,
 				B1474A6D205BBA4D003D60DC /* AppDelegate.swift */,
 				B1474A81205BCB5F003D60DC /* TopViewController.swift */,
 				B1474A71205BBA4D003D60DC /* Main.storyboard */,
@@ -68,6 +71,14 @@
 				B1474A87205C082F003D60DC /* TabBarViewController.swift */,
 			);
 			path = Post_it;
+			sourceTree = "<group>";
+		};
+		B1474A8B20633674003D60DC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B1474A8C206336A6003D60DC /* UIColor+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +157,7 @@
 				B1474A86205BFE03003D60DC /* PostViewController.swift in Sources */,
 				B1474A82205BCB5F003D60DC /* TopViewController.swift in Sources */,
 				B1474A6E205BBA4D003D60DC /* AppDelegate.swift in Sources */,
+				B1474A8D206336A6003D60DC /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
