@@ -11,13 +11,37 @@ import UIKit
 class TopViewController: UIViewController, UITableViewDataSource, UITextFieldDelegate {
     
     @IBOutlet weak var inputURL: UITextField!
+    @IBOutlet weak var title_image: UINavigationItem!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        inputURL.delegate = self
+        title_image.titleView = UIImageView(image: UIImage(named: "title"))
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // keybord func
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+    // list
     var recentBoardList = ["Why people needs water.", "Do we needs AI in this world?", "How many times you get regret?", "Can We eat a human?", "Bussiness makes  wars", "Music is for?"]
     
     var sectionIndex:[String] = ["Recent"]
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return recentBoardList.count
+        return recentBoardList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -39,29 +63,6 @@ class TopViewController: UIViewController, UITableViewDataSource, UITextFieldDel
             recentBoardList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
-    }
-    
-
-    @IBOutlet weak var title_image: UINavigationItem!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        inputURL.delegate = self
-        title_image.titleView = UIImageView(image: UIImage(named: "title"))
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
     
 
