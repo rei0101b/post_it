@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseStorage
 
 class PostViewController: UIViewController, UITextViewDelegate {
 
@@ -20,12 +22,16 @@ class PostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var border3: UIButton!
     @IBOutlet weak var border4: UIButton!
     @IBOutlet weak var border5: UIButton!
+    var borderColor = "F02B5664"
+    var docRef: DocumentReference!
+    let uuidString = UUID().uuidString
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title_image.titleView = UIImageView(image: UIImage(named: "title"))
         textView.delegate = self
+        docRef = Firestore.firestore().document("sampleData/post")
         setCloseOnKeyboard()
         setPostBorderColor()
         setGesture()
@@ -57,11 +63,27 @@ class PostViewController: UIViewController, UITextViewDelegate {
         case .ended:
             print("pan end")
             UIView.transition(with: gesturView, duration: 0.7, options: [.transitionCurlUp], animations: nil, completion: nil)
-            textView.text = ""
+            guard let postText = textView.text, validate(textView: textView) else { return }
+            let dataToSend: [String: Any] = ["text": postText, "border": borderColor, "deleteflag": false]
+            print(dataToSend)
+            docRef.setData(dataToSend) { (error) in
+                if let error = error {
+                    print("error: \(error.localizedDescription)")
+                } else {
+                    print("data has been save")
+                }
+            }
             break
         default:
             break
         }
+    }
+    
+    func validate(textView textView: UITextView) -> Bool {
+        guard let text = textView.text, !text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty else {
+            return false
+        }
+        return true
     }
     
     
@@ -105,26 +127,58 @@ class PostViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func changeBorder1(_ sender: Any) {
+        borderColor = "F02B5664"
         textView.layer.borderColor = UIColor.border1()
-        
     }
     
     @IBAction func changeBorder2(_ sender: Any) {
+        borderColor = "F8E71C64"
         textView.layer.borderColor = UIColor.border2()
     }
     
     @IBAction func changeBorder3(_ sender: Any) {
+        borderColor = "29D00264"
         textView.layer.borderColor = UIColor.border3()
     }
     
     @IBAction func changeBorder4(_ sender: Any) {
+        borderColor = "0275D064"
         textView.layer.borderColor = UIColor.border4()
     }
     
     @IBAction func changeBorder5(_ sender: Any) {
+        borderColor = "BF1CF864"
         textView.layer.borderColor = UIColor.border5()
     }
     
+    @IBAction func camera_prot(_ sender: Any) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference(forURL: "gs://post-it-b02f3.appspot.com/")
+        // Data in memory
+        let data = Data()
+        
+        // Create a reference to the file you want to upload
+        let riversRef = storageRef.child("images/mashu.jpg")
+        let imageData = UIImageJPEGRepresentation(#imageLiteral(resourceName: "IMG_4118"), 0.1)!
+        // Upload the file to the path "images/rivers.jpg"
+        let uploadTask = riversRef.putData(imageData, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                print("Uh-oh, an error occurred!")
+                return
+            }
+            // Metadata contains file metadata such as size, content-type, and download URL.
+            let downloadURL = metadata.downloadURL()
+            let deta = downloadURL?.absoluteString
+            let dataToSend: [String: Any] = ["image": deta]
+            self.docRef.setData(dataToSend) { (error) in
+                if let error = error {
+                    print("error: \(error.localizedDescription)")
+                } else {
+                    print("image has been save")
+                }
+            }
+        }
+    }
     
     /*
     // MARK: - Navigation
